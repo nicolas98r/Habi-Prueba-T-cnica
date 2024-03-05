@@ -2,6 +2,7 @@
 
 from http.server import HTTPServer
 from handler import PropertyHandler
+from utils import Logger
 
 
 def run(server_class=HTTPServer, handler_class=PropertyHandler, port=8080):
@@ -14,7 +15,8 @@ def run(server_class=HTTPServer, handler_class=PropertyHandler, port=8080):
     """
     server_address = ("", port)
     httpd = server_class(server_address, handler_class)
-    print(f"Iniciando Servidor en el Puerto: {port}")
+    logger = Logger()
+    logger.info(f"Iniciando Servidor en el Puerto: {port}")
     httpd.serve_forever()
 
 
