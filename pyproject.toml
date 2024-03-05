@@ -1,0 +1,14 @@
+[tool.poetry]
+name = "habi-prueba-tecnica"
+version = "1.0.0"
+description = "Prueba técnica desarrollador Ssr Habi"
+authors = ["nicolas98r <nico98.snrm@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
