@@ -14,9 +14,13 @@ if not os.path.exists(secrets_path):
 
 load_dotenv(secrets_path)
 
-# DB Connection Constants
+# DB Connection Constraints
 DB_HOST = os.environ.get("DB_HOST")
 DB_PORT = os.environ.get("DB_PORT")
 DB_SCHEMA = os.environ.get("DB_SCHEMA")
 DB_USER = os.environ.get("DB_USER")
 DB_PASSWORD = os.environ.get("DB_PASSWORD")
+
+# Resources PATH Constraints
+RESOURCES_PATH = "resources"
+SQL_PATH = f"{RESOURCES_PATH}/sql"

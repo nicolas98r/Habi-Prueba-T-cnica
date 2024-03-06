@@ -1,3 +1,3 @@
 from handler.handler import PropertyHandler
 
-__all__ = ["PropertyHandler"]
+__all__ = [PropertyHandler]

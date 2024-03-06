@@ -1,3 +1,3 @@
-from conf.constraints import DB_HOST, DB_PASSWORD, DB_PORT, DB_SCHEMA, DB_USER
+from conf.connection import DBConnection
 
-__all__ = [DB_HOST, DB_PASSWORD, DB_PORT, DB_SCHEMA, DB_USER]
+__all__ = [DBConnection]

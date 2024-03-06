@@ -1,0 +1,13 @@
+{
+    "filters": [
+        {
+            "year": 2011
+        },
+        {
+            "city": "bogota"
+        },
+        {
+            "state": "pre_venta"
+        }
+    ]
+}
