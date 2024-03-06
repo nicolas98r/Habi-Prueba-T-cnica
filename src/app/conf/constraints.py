@@ -24,3 +24,4 @@ DB_PASSWORD = os.environ.get("DB_PASSWORD")
 # Resources PATH Constraints
 RESOURCES_PATH = "resources"
 SQL_PATH = f"{RESOURCES_PATH}/sql"
+JSON_PATH = f"{RESOURCES_PATH}/json"

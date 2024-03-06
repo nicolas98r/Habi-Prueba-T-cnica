@@ -1,8 +1,6 @@
 """Main Package."""
 
 from http.server import HTTPServer
-from controller import PropertyController
-from model import Filter, FilterType
 from handler import PropertyHandler
 from utils import Logger
 
