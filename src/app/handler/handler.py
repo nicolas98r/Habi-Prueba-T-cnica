@@ -10,7 +10,7 @@ class PropertyHandler(BaseHTTPRequestHandler):
         BaseHTTPRequestHandler --  HTTP class server.
     """
 
-    def do_POST(self):
+    def do_POST(self) -> None:
         """Make a POST Request"""
         self.send_response(200)
         self.end_headers()

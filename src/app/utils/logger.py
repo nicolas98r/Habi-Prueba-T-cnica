@@ -4,11 +4,7 @@ import logging
 
 
 class Logger:
-    """Logger Singleton.
-
-    Returns:
-        _description_
-    """
+    """Logger Singleton."""
 
     _instance = None
     _logger = None
@@ -25,7 +21,7 @@ class Logger:
             cls._logger.addHandler(stream)
         return cls._instance
 
-    def info(self, message: str):
+    def info(self, message: str) -> None:
         """Send a message at the INFO level.
 
         Arguments:
@@ -33,7 +29,7 @@ class Logger:
         """
         self._logger.info(message)
 
-    def error(self, message: str):
+    def error(self, message: str) -> None:
         """Send a message at the ERROR level.
 
         Arguments:
