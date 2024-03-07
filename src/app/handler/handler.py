@@ -2,6 +2,8 @@
 
 from http.server import BaseHTTPRequestHandler
 import json
+from conf.constraints import JSON_PATH
+from utils import open_json_file, validate_json
 from controller import PropertyController
 
 
@@ -18,13 +20,11 @@ class PropertyHandler(BaseHTTPRequestHandler):
         """Make a POST Request"""
         content_length = int(self.headers["Content-Length"])
         post_data = self.rfile.read(content_length)
-        data = json.loads(post_data.decode("utf-8"))
-        # Convertir JSON
-        filters = self.convert_to_list_filter(data)
-        print(filters)
-        response = self._controller.find_properties(filters)
+        body = json.loads(post_data.decode("utf-8"))
+        body_schema = open_json_file(f"{JSON_PATH}/filters_validator_schema.json")
+        data = validate_json(body, body_schema)
+        response = self._controller.find_properties(data)
         self.send_response(200)
         self.send_header("Content-type", "application/json")
         self.end_headers()
-        print(response)
         self.wfile.write(response.encode("utf-8"))

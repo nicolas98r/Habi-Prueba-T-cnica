@@ -17,11 +17,7 @@ def open_file(path: str) -> str:
     return data
 
 
-def generate_query(filters: List[Filter]) -> str:
-    from conf.constraints import SQL_PATH
-
-    query = open_file(f"{SQL_PATH}/FIND_PROPERTIES.sql")
-
+def generate_query(query: str, filters: List[Filter]) -> str:
     format_query = " ".join(
         [f'AND {filter.name.value} = "{filter.value}"' for filter in filters]
     )
@@ -35,11 +31,7 @@ def open_json_file(path: str) -> Any:
     return data
 
 
-def validate_json() -> Any:
-    from conf.constraints import JSON_PATH
-
-    json = open_json_file(f"{JSON_PATH}/filters.json")
-    schema = open_json_file(f"{JSON_PATH}/filters_validator_schema.json")
+def validate_json(json: Any, schema: Any) -> Any:
     try:
         validate(instance=json, schema=schema)
         logger.info("JSON Body Validado")

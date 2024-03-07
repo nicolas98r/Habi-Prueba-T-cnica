@@ -5,8 +5,8 @@ from http.server import HTTPServer
 import requests
 import time
 from handler import PropertyHandler
-from utils import Logger, validate_json
-from conf.constraints import URL_HOST, URL_PORT
+from utils import Logger, open_json_file
+from conf.constraints import URL_HOST, URL_PORT, JSON_PATH
 from typing import Optional
 
 logger = Logger()
@@ -32,7 +32,7 @@ def run_server(
 def send_request(request_delay: Optional[int] = 5) -> None:
     time.sleep(request_delay)
     url = f"{URL_HOST}:{URL_PORT}"
-    body = validate_json()
+    body = open_json_file(f"{JSON_PATH}/filters.json")
     response = requests.post(url, data=body)
     if response.status_code == 200:
         logger.info(
@@ -46,11 +46,4 @@ def send_request(request_delay: Optional[int] = 5) -> None:
 
 
 if __name__ == "__main__":
-    server_thread = threading.Thread(target=run_server)
-    request_thread = threading.Thread(target=send_request)
-
-    server_thread.start()
-    request_thread.start()
-
-    server_thread.join()
-    request_thread.join()
+    run_server()

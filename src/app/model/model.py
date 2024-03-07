@@ -34,7 +34,7 @@ class FilterType(Enum):
 
     YEAR = "year"
     CITY = "city"
-    STATUS = "s.name"
+    STATUS = "status"
 
 
 @dataclass
@@ -45,5 +45,9 @@ class Filter:
     value: Any
 
     @staticmethod
-    def to_list_filter(**kwargs) -> List["Filter"]:
-        return [Filter(FilterType(key.upper()), value) for key, value in kwargs.items()]
+    def to_list_filter(filters: Any) -> List["Filter"]:
+        answer = []
+        for filter in filters:
+            for key, value in filter.items():
+                answer.append(Filter(FilterType(key), value))
+        return answer

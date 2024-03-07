@@ -1,4 +1,4 @@
 from utils.logger import Logger
-from utils.utils import generate_query, validate_json
+from utils.utils import open_file, generate_query, open_json_file, validate_json
 
-__all__ = [Logger, generate_query, validate_json]
+__all__ = [Logger, open_file, generate_query, open_json_file, validate_json]

@@ -7,7 +7,7 @@
             "city": "bogota"
         },
         {
-            "state": "pre_venta"
+            "status": "pre_venta"
         }
     ]
 }
