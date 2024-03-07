@@ -38,7 +38,7 @@ Una vez instalado, ejecute el comando de instalación de dependencias con poetry
 
 Poetry facilita la instalación de dependencias al instalar las versiones recientes de las librerías así como la generación del entorno virtual para el proyecto.
 
-### Opción 1: Archivo requirements.txt
+### Opción 2: Archivo requirements.txt
 Ejecute el comando de instalación de las dependencias mediante el archivo `requirements.txt`
 
 ```bash
@@ -65,7 +65,7 @@ Para ejecutar este proyecto, debe añadir las siguientes variables de entorno a 
 
 
 
-## Explicación desarrollo 1ro ejercicio
+## Explicación desarrollo 1 ejercicio
 
 Para el primer ejercicio sé pedía realizar un microservicio para obtener la lista de inmuebles vendidos como los disponibles. Dichos inmuebles pueden ser filtrados por varios valores. Por último los microservicios deben ser establecidos en arquitectura REST.
 
@@ -132,9 +132,86 @@ Para el desarrollo del servicio se genero un Handler HTTP que reconoce la petici
 
 
 
-## Explicación desarrollo 2do ejercicio
-## Explicación desarrollo 3er ejercicio
+## Explicación desarrollo 2 ejercicio
 
+Para el segundo ejercicio se desea desarrollar un microservicio para generar "Me Gusta" de las propiedades, a continuación se presenta el Diagrama Entidad Relación de la solución planteada.
+| Indicador             | Descripción                                                                |
+| ----------------- | ------------------------------------------------------------------ |
+|![#D79B00](https://via.placeholder.com/10/D79B00?text=+)| Entidades iniciales.|
+|![#82B366](https://via.placeholder.com/10/82B366?text=+) |Entidades propuestas. |
+
+![2 Model](https://i.ibb.co/F05VHvB/Habi-DER.png)
+
+En el diagrama anterior se presenta la solución generando una nueva entidad `interaction`, esta almacena el nombre (en este caso "Me Gusta") así como su correspondiente label.
+
+Se genera la entidad `user`con los correspondientes parámetros (**NOTA: No se especifica dentro del modelo enviado por el evaluador, se creó un user simple con parámetros de acceso**).
+
+Por último, se crea la estructura `interaction_history`, esta tabla almacena los registros de interacción entre usuarios y propiedad junto con el tipo de interacción que realizo, todo esto a partir de la fecha donde hizo la interacción.
+
+### Queries de Creación
+
+**user**
+ ```SQL
+/* Create Table */
+
+CREATE TABLE `user` (
+	`id` INT NOT NULL,
+	`username` VARCHAR(20) NOT NULL,
+	`password` VARCHAR(20) NOT NULL,
+	CONSTRAINT `PK_USER` PRIMARY KEY (`id` ASC)
+);
+ ```
+
+ 
+**interaction**
+ ```SQL
+/* Create Table */
+
+CREATE TABLE `interaction` (
+	`id` INT NOT NULL,
+	`name` VARCHAR(32) NOT NULL,
+	`label` VARCHAR(64) NULL,
+	CONSTRAINT `PK_INTERACTION` PRIMARY KEY (`id` ASC)
+);
+ ```
+
+ 
+**interaction_history**
+ ```SQL
+/* Create Table */
+
+CREATE TABLE `interaction_history` (
+	`id` INT NOT NULL,
+	`interaction_id` INT NOT NULL,
+	`property_id` INT NOT NULL,
+	`user_id` INT NOT NULL,
+	`update_date` DATE NOT NULL,
+	CONSTRAINT `PK_INTERACTION_HISTORY` PRIMARY KEY (`id` ASC)
+);
+
+/* Foreign Key Constraints */
+
+ALTER TABLE `interaction_history` 
+ ADD CONSTRAINT `FK_INTERACTION_INTERACTION_HISTORY`
+	FOREIGN KEY (`interaction_id`) REFERENCES `interaction` (`id`) ON DELETE No Action ON UPDATE No Action;
+
+ALTER TABLE `interaction_history` 
+ ADD CONSTRAINT `FK_PROPERTY_INTERACTION_HISTORY`
+	FOREIGN KEY (`property_id`) REFERENCES `property` (`id`) ON DELETE No Action ON UPDATE No Action;
+
+ALTER TABLE `interaction_history` 
+ ADD CONSTRAINT `FK_USER_INTERACTION_HISTORY`
+	FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE No Action ON UPDATE No Action;
+ ```
+
+### Ventajas de la solución
+
+Esta solución ofrece escalabilidad respecto a la posibilidad de nuevas interacciones ("No me gusta", "Favoritos", "Guardado" etc.), así mismo, es fácil agrupar las interacciones a partir de las funciones de agrupación SQL. Finalmente, se respetó el modelo base con nombres según la nomenclatura usada así como sintaxis y valores de datos según los datos ya presentes.
+## Explicación desarrollo 3 ejercicio
+
+En este ejercicio se pide ordenar un array separado por bloques, cada bloque se identifica por un 0, un bloque sin elementos se señala con una X.
+
+Este proyecto se encuentra dentro de `src/list_organizer`, ejecutando el archivo `main.py`.
 
 ## Autor
 Sergio Nicolás Ramírez Manrique
