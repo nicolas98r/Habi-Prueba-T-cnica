@@ -25,6 +25,15 @@ class DBConnection:
         return cls._instance
 
     def execute(self, query: str) -> List[Property]:
+        """Execute a query to obtain the list of filtered properties from the
+           DB.
+
+        Arguments:
+            query: str -- Query formatted for filtering.
+
+        Returns:
+            List[Property] -- List of filtered properties.
+        """
         cursor = self._con.cursor()
         cursor.execute(query)
         result = cursor.fetchall()

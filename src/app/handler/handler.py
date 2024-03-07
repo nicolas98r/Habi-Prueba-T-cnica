@@ -17,13 +17,18 @@ class PropertyHandler(BaseHTTPRequestHandler):
     _controller = PropertyController()
 
     def do_POST(self) -> None:
-        """Make a POST Request"""
+        """Make a POST Request."""
+        # Load and decode request body.
         content_length = int(self.headers["Content-Length"])
         post_data = self.rfile.read(content_length)
         body = json.loads(post_data.decode("utf-8"))
+
+        # Validate the body according to the schema.
         body_schema = open_json_file(f"{JSON_PATH}/filters_validator_schema.json")
         data = validate_json(body, body_schema)
         response = self._controller.find_properties(data)
+
+        # Send response body.
         self.send_response(200)
         self.send_header("Content-type", "application/json")
         self.end_headers()

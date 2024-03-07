@@ -11,6 +11,7 @@ logger = Logger()
 
 
 class PropertyController:
+    """PropertyController Class."""
 
     def __init__(self) -> None:
         try:
@@ -21,6 +22,14 @@ class PropertyController:
             logger.error(f"Error conectando a la BD: {error}")
 
     def find_properties(self, body: Any) -> Any:
+        """Find the properties according to the filters.
+
+        Arguments:
+            body: Any -- Filters (JSON) to apply.
+
+        Returns:
+            Any -- Filtered properties.
+        """
         filters = Filter.to_list_filter(body.get("filters", []))
         query = open_file(f"{SQL_PATH}/FIND_PROPERTIES.sql")
         formated_query = generate_query(query, filters)

@@ -1,4 +1,4 @@
-"""Model Package"""
+"""Model Package."""
 
 import json
 from dataclasses import dataclass, field
@@ -26,6 +26,14 @@ class Property:
 
     @staticmethod
     def to_json(properties: List["Property"]) -> Any:
+        """Covert a List of Properties to JSON.
+
+        Arguments:
+            properties:  List["Property"] -- List of Properties.
+
+        Returns:
+            Any: JSON Properties.
+        """
         return json.dumps([vars(property) for property in properties])
 
 
@@ -46,6 +54,14 @@ class Filter:
 
     @staticmethod
     def to_list_filter(filters: Any) -> List["Filter"]:
+        """Covert a JSON to a List of Filters.
+
+        Arguments:
+            filters:  Any -- JSON Filters.
+
+        Returns:
+            List[Filter] -- List of Filters.
+        """
         answer = []
         for filter in filters:
             for key, value in filter.items():

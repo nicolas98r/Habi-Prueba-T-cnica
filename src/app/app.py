@@ -1,3 +1,5 @@
+"""App Package."""
+
 from http.server import HTTPServer
 from handler import PropertyHandler
 from utils import Logger
