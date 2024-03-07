@@ -62,8 +62,8 @@ class Filter:
         Returns:
             List[Filter] -- List of Filters.
         """
-        answer = []
-        for filter in filters:
-            for key, value in filter.items():
-                answer.append(Filter(FilterType(key), value))
-        return answer
+        return [
+            Filter(FilterType(key), value)
+            for filter in filters
+            for key, value in filter.items()
+        ]
