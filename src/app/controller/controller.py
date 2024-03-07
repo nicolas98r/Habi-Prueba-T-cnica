@@ -1,6 +1,6 @@
 """Controller Package."""
 
-from typing import List
+from typing import Any
 
 from model import Filter, Property
 from conf import DBConnection
@@ -20,6 +20,9 @@ class PropertyController:
         except TypeError as error:
             logger.error(f"Error conectando a la BD: {error}")
 
-    def find_properties(self, filters: List[Filter]) -> List[Property]:
+    def find_properties(self, body: Any) -> Any:
+
+        filters = Filter.to_list_filter(body.get("filters", []))
         query = generate_query(filters)
-        return self._con.execute(query)
+        properties = self._con.execute(query)
+        return Property.to_json(properties)

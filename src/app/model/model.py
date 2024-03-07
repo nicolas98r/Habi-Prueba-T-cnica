@@ -1,7 +1,9 @@
 """Model Package"""
 
+import json
 from dataclasses import dataclass, field
 from enum import Enum
+from typing import Any, List
 
 
 class Status(Enum):
@@ -22,6 +24,10 @@ class Property:
     price: int = field(default=0)
     description: str = field(default="", metadata={"required": False})
 
+    @staticmethod
+    def to_json(properties: List["Property"]) -> Any:
+        return json.dumps([vars(property) for property in properties])
+
 
 class FilterType(Enum):
     """Filter Type Enum."""
@@ -36,4 +42,8 @@ class Filter:
     """Filter Dataclass."""
 
     name: FilterType
-    value: any
+    value: Any
+
+    @staticmethod
+    def to_list_filter(**kwargs) -> List["Filter"]:
+        return [Filter(FilterType(key.upper()), value) for key, value in kwargs.items()]

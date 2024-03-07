@@ -1,13 +1,20 @@
 """Main Package."""
 
+import threading
 from http.server import HTTPServer
+import requests
+import time
 from handler import PropertyHandler
-from utils import Logger
+from utils import Logger, validate_json
+from conf.constraints import URL_HOST, URL_PORT
+from typing import Optional
 
 logger = Logger()
 
 
-def run(server_class=HTTPServer, handler_class=PropertyHandler, port=8080) -> None:
+def run_server(
+    server_class=HTTPServer, handler_class=PropertyHandler, port=URL_PORT
+) -> None:
     """Run the HTTPServer.
 
     Keyword Arguments:
@@ -22,5 +29,28 @@ def run(server_class=HTTPServer, handler_class=PropertyHandler, port=8080) -> No
     httpd.serve_forever()
 
 
+def send_request(request_delay: Optional[int] = 5) -> None:
+    time.sleep(request_delay)
+    url = f"{URL_HOST}:{URL_PORT}"
+    body = validate_json()
+    response = requests.post(url, data=body)
+    if response.status_code == 200:
+        logger.info(
+            f"Solicitud POST exitosa\n Respuesta del Servidor: {response.json()}"
+        )
+    else:
+        logger.error(
+            "Error al enviar la solicitud POST. \n"
+            f"Código de estado: {response.status_code}"
+        )
+
+
 if __name__ == "__main__":
-    run()
+    server_thread = threading.Thread(target=run_server)
+    request_thread = threading.Thread(target=send_request)
+
+    server_thread.start()
+    request_thread.start()
+
+    server_thread.join()
+    request_thread.join()

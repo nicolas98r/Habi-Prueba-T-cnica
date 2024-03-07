@@ -25,3 +25,7 @@ DB_PASSWORD = os.environ.get("DB_PASSWORD")
 RESOURCES_PATH = "resources"
 SQL_PATH = f"{RESOURCES_PATH}/sql"
 JSON_PATH = f"{RESOURCES_PATH}/json"
+
+# URL Constraints
+URL_HOST = "http://localhost"
+URL_PORT = 8080
